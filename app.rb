@@ -104,7 +104,8 @@ post '/deletetweet' do
 end	
 
 post '/edittweet' do
-	tweet = Tweet.get(params[:id])
+	id = params[:id]
+	tweet = Tweet.get(id)
 	tweet.content = params[:content]
 	tweet.save
 	redirect '/'

@@ -11,7 +11,7 @@
 </form>
 <form action = "/edittweet" method = "POST">
 <input type = "text" name = "content">
-<input type = "hidden" name = "id">
+<input type = "hidden" name = "id" value = "<%= tweet.id %>">
 <input type = "submit" value = "Edit">
 </form>
 <%end%>
