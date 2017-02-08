@@ -40,7 +40,7 @@ get '/' do
 	else
 		redirect '/signin'
 	end
-		tweet = Tweet.all(user_id: user.id)	
+		tweet = Tweet.all	
 	
 	erb :index, locals: {user: user, tweet: tweet}
 end
@@ -109,4 +109,4 @@ post '/edittweet' do
 	tweet.content = params[:content]
 	tweet.save
 	redirect '/'
-end	
+end
