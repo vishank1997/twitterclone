@@ -1,1 +1,17 @@
-<h1>Welcome, To my twitter clone </h1>         <!--most of the app is executed here -->
+<h1>Welcome, To my twitter clone </h1><!--most of the app is executed here -->
+<form action = "/newtweet" method = "POST">
+<input type = "text" name = "content">
+<input type = "submit" value="Tweet">
+</form>
+<% tweet.each do |tweet| %>
+<%= tweet.content%>
+<form action = "/deletetweet" method="POST">
+<input type = "hidden" name = "id" >
+<button>Delete Tweet</button>
+</form>
+<form action = "/edittweet" method = "POST">
+<input type = "text" name = "content">
+<input type = "hidden" name = "id">
+<input type = "submit" value = "Edit">
+</form>
+<%end%>

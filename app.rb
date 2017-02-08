@@ -1,5 +1,4 @@
 require 'sinatra'
-
 require 'data_mapper'
 
 DataMapper.setup(:default, "sqlite:///#{Dir.pwd}/data.db")
@@ -28,7 +27,8 @@ class Follower
 	property :email,String
 	property :id,Serial
 	property :user_id, String
-end	
+end
+
 DataMapper.finalize
 User.auto_upgrade!
 Tweet.auto_upgrade!
@@ -40,13 +40,13 @@ get '/' do
 	else
 		redirect '/signin'
 	end
-		tweet = Tweet.all(:user_id => user.id)	
+		tweet = Tweet.all(user_id: user.id)	
 	
 	erb :index, locals: {user: user, tweet: tweet}
 end
 
 get '/signin' do
-erb :signin
+	erb :signin
 end
 
 post '/signin' do 
@@ -65,7 +65,7 @@ post '/signin' do
 end
 
 get '/signup' do
-erb :signup
+	erb :signup
 end
 
 post '/signup' do 
@@ -88,3 +88,24 @@ post '/logout' do
 	session[:user_id] = nil
 	redirect '/'
 end
+
+post '/newtweet' do
+	tweet = Tweet.new
+	tweet.content = params[:content]
+	tweet.user_id = session[:user_id]
+	tweet.likes = false
+	tweet.save
+	redirect '/'
+end
+
+post '/deletetweet' do
+	Tweet.get(params[:id]).destroy
+	redirect '/'
+end	
+
+post '/edittweet' do
+	tweet = Tweet.get(params[:id])
+	tweet.content = params[:content]
+	tweet.save
+	redirect '/'
+end	
