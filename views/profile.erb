@@ -1,1 +1,17 @@
 <h1> <%= user.name %> </h1>
+<% tweet.each do |tweet| %>
+<%= tweet.content%>
+<form action = "/deletetweet" method="POST">
+<input type = "hidden" name = "id"  value="<%= tweet.id %>" >
+<button>Delete Tweet</button>
+</form>
+<form action = "/edittweet" method = "POST">
+<input type = "text" name = "content">
+<input type = "hidden" name = "id" value = "<%= tweet.id %>">
+<input type = "submit" value = "Edit">
+</form>
+<%end%>
+<form action = "/follow" method = "POST">
+	<button>Follow Me</button>
+	<input type = "hidden" name = "id" value = "<%= user.id %>">
+</form>
