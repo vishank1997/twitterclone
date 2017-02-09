@@ -40,10 +40,19 @@ get '/' do
 	else
 		redirect '/signin'
 	end
-		tweet = Tweet.all	
-	
-	erb :index, locals: {user: user, tweet: tweet}
+		tweet = Tweet.all
+		user1 = User.all
+	erb :index, locals: {user: user, tweet: tweet, user1: user1}
 end
+
+get '/profile' do
+	id = params[:id]
+	user = User.get(id)
+	tweet = Tweet.all(user_id: id)
+
+	erb :profile, locals: {user: user, tweet: tweet}
+end
+
 
 get '/signin' do
 	erb :signin
@@ -93,7 +102,6 @@ post '/newtweet' do
 	tweet = Tweet.new
 	tweet.content = params[:content]
 	tweet.user_id = session[:user_id]
-	tweet.likes = false
 	tweet.save
 	redirect '/'
 end

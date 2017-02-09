@@ -7,7 +7,7 @@
 <% tweet.each do |tweet| %>
 <%= tweet.content%>
 <form action = "/deletetweet" method="POST">
-<input type = "hidden" name = "id" >
+<input type = "hidden" name = "id" value="<%= tweet.id %>" >
 <button>Delete Tweet</button>
 </form>
 <form action = "/edittweet" method = "POST">
@@ -16,6 +16,14 @@
 <input type = "submit" value = "Edit">
 </form>
 <%end%>
+<% user1.each do |user1| %>
+<form action="/profile" method="GET">
+<input type = "hidden" name = "id" value = "<%= user1.id %>">
+<button><%= user1.email %></button>
+</form>
+<% end %>
+
+
 <form action="/logout" method="POST">
 	<button>Log Out</button>
 </form>
