@@ -1,6 +1,8 @@
-<h1>yeh hai gudia ka facebook <%= user.name %> </h1>
+<h1>yeh hai gudia ka facebook <%= user1.name %> </h1>
 <% tweet.each do |tweet| %>
 <%= tweet.content%>
+
+<%if user.id == user1.id%>
 <form action = "/deletetweet" method="POST">
 <input type = "hidden" name = "id"  value="<%= tweet.id %>" >
 <button>Delete Tweet</button>
@@ -10,7 +12,8 @@
 <input type = "hidden" name = "id" value = "<%= tweet.id %>">
 <input type = "submit" value = "Edit">
 </form>
-<%end%>
+<% end %>
+<% end %>
 <form action = "/follow" method = "POST">
 	<button>Follow Me</button>
 	<input type = "hidden" name = "id" value = "<%= user.id %>">

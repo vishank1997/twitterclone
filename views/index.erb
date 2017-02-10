@@ -1,28 +1,44 @@
-<h1>Welcome, To gudia ka facebook</h1><!--most of the app is executed here -->
+<h1>Welcome, <%= user.email %> </h1><!--most of the app is executed here -->
 <form action = "/newtweet" method = "POST">
 <input type = "text" name = "content">
 <input type = "submit" value="Tweet">
 </form>
 <% tweet.each do |tweet| %>
 <%= tweet.content%>
-<form action = "/deletetweet" method="POST">
-<input type = "hidden" name = "id" value="<%= tweet.id %>" >
-<button>Delete Tweet</button>
-</form>
 <form action = "/like" method="POST">
 <input type = "hidden" name = "id" value="<%= tweet.id %>" >
+<% like1.each do |like| %>
+<% if like.user_id1 == user.id %>
+<button>UnLike</button>
+<%else%>
 <button>Like</button>
-<form>
+<% end %>
+<% end %>
 <% likes.each do |like| %>
 <%if tweet.id == like.tweet_id%>
 <%= like.name1 %>
 <% end %>
 <% end %>
+</form>
+
+<form action = "/unlike" method="POST">
+<input type = "hidden" name = "id" value="<%= tweet.id %>" >
+<button>UnLike</button>
+</form>
+
+<%if user.id == tweet.user_id%>
 <form action = "/edittweet" method = "POST">
 <input type = "text" name = "content">
 <input type = "hidden" name = "id" value = "<%= tweet.id %>">
 <input type = "submit" value = "Edit">
 </form>
+<form action = "/deletetweet" method="POST">
+<input type = "hidden" name = "id" value="<%= tweet.id %>" >
+<button>Delete Tweet</button>
+</form>
+<%end%>
+
+
 <%end%>
 <% user1.each do |user1| %>
 <form action = "/profile" method = "GET">

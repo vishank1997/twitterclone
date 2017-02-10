@@ -58,14 +58,16 @@ get '/' do
 		user1 = User.all
 		follow = Follow.all(user_id1: session[:user_id])
 		likes = Like.all
-	erb :index, locals: {user: user, tweet: tweet, user1: user1, follow: follow, likes: likes}
+		like1 = Like.all(user_id1: session[:user_id])
+	erb :index, locals: {user: user, tweet: tweet, user1: user1, follow: follow, likes: likes, like1: like1}
 end
 
 get '/profile' do
 	id = params[:id]
-	user = User.get(id)
+	user = User.get(session[:user_id])
+	user1 = User.get(id)
 	tweet = Tweet.all(user_id: id)
-	erb :profile, locals: {user: user, tweet: tweet}
+	erb :profile, locals: {user1: user1,user: user, tweet: tweet}
 end
 
 post '/follow' do 
@@ -97,6 +99,13 @@ post '/like' do
 	like.user_id2 =	tweet.user_id
 	tweet.likes = tweet.likes + 1
 	tweet.save
+	like.save
+	redirect '/'
+end
+
+post '/unlike' do
+	like=Like.all(user_id1: session[:user_id], tweet_id: params[:id])
+	like.destroy
 	like.save
 	redirect '/'
 end
