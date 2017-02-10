@@ -5,15 +5,10 @@
 </form>
 <% tweet.each do |tweet| %>
 <%= tweet.content%>
+
 <form action = "/like" method="POST">
 <input type = "hidden" name = "id" value="<%= tweet.id %>" >
-<% like1.each do |like| %>
-<% if like.user_id1 == user.id %>
-<button>UnLike</button>
-<%else%>
 <button>Like</button>
-<% end %>
-<% end %>
 <% likes.each do |like| %>
 <%if tweet.id == like.tweet_id%>
 <%= like.name1 %>
