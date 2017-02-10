@@ -18,7 +18,7 @@ class Tweet
 	property :content, String
 	property :id, Serial
 	property :user_id, Integer
-	property :likes, Integer
+	property :likes, Integer, default: 0
 end
 
 class Follow 						#the '1' against the name of data variable is for follower
@@ -32,9 +32,19 @@ class Follow 						#the '1' against the name of data variable is for follower
 	property :user_id2, Integer
 end
 
+class like
+	include DataMapper::Resource
+	property :name1, String
+	property :name2, String
+	property :user_id1, Integer
+	property :user_id2, Integer
+	property :tweet_id, Integer
+	property :id, Serial
+end	
 DataMapper.finalize
 User.auto_upgrade!
 Tweet.auto_upgrade!
+Like.auto_upgrade!
 Follow.auto_upgrade!
 
 
@@ -73,9 +83,19 @@ post '/follow' do
 	redirect '/'
 end
 
+post '/like' do
+	id = params[:id]
+	tweet = Tweet.get(id)
+	like.user_id = session[:user_id]
+
+	tweet.likes = tweet.likes + 1
+	tweet.
+	tweet.save
+	redirect '/'
+end
 
 get '/signin' do
-	erb :signin
+	erb :signinmm
 end
 
 post '/signin' do 
