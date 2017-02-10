@@ -84,12 +84,12 @@ post '/follow' do
 end
 
 post '/like' do
-	id = params[:id]
-	tweet = Tweet.get(id)
-	like.user_id = session[:user_id]
-
+	id = params[:id]				#the user1 be the person currently signed in and liking the other persons tweet			
+	tweet = Tweet.get(id)			#the user2 be the person who wrote the tweet 
+	like.tweet_id = tweet.id 		
+	like.user_id1 =	session[:user_id]
+	like.user_id2 =	tweet.user_id
 	tweet.likes = tweet.likes + 1
-	tweet.
 	tweet.save
 	redirect '/'
 end

@@ -9,6 +9,10 @@
 <input type = "hidden" name = "id" value="<%= tweet.id %>" >
 <button>Delete Tweet</button>
 </form>
+<form action = "/like" method="POST">
+<input type = "hidden" name = "id" value="<%= tweet.id %>" >
+<button>Like</button>
+</form>
 <form action = "/edittweet" method = "POST">
 <input type = "text" name = "content">
 <input type = "hidden" name = "id" value = "<%= tweet.id %>">
