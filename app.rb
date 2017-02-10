@@ -32,7 +32,7 @@ class Follow 						#the '1' against the name of data variable is for follower
 	property :user_id2, Integer
 end
 
-class like
+class Like
 	include DataMapper::Resource
 	property :name1, String
 	property :name2, String
@@ -56,8 +56,9 @@ get '/' do
 	end
 		tweet = Tweet.all
 		user1 = User.all
-		follow = Follow.all(user_id1: session[:user_id]) 
-	erb :index, locals: {user: user, tweet: tweet, user1: user1, follow: follow}
+		follow = Follow.all(user_id1: session[:user_id])
+		likes = Like.all
+	erb :index, locals: {user: user, tweet: tweet, user1: user1, follow: follow, likes: likes}
 end
 
 get '/profile' do
@@ -84,18 +85,24 @@ post '/follow' do
 end
 
 post '/like' do
-	id = params[:id]				#the user1 be the person currently signed in and liking the other persons tweet			
-	tweet = Tweet.get(id)			#the user2 be the person who wrote the tweet 
-	like.tweet_id = tweet.id 		
+	id = params[:id]					#the user1 be the person currently signed in
+	tweet = Tweet.get(id)
+	user1 = User.get(session[:user_id]) #liking the other persons tweet
+	user2 = User.get(tweet.user_id)
+	like = Like.new						#the user2 be the person who wrote the tweet 
+	like.tweet_id = tweet.id
+	like.name1 = user1.name
+	like.name2 = user2.name		
 	like.user_id1 =	session[:user_id]
 	like.user_id2 =	tweet.user_id
 	tweet.likes = tweet.likes + 1
 	tweet.save
+	like.save
 	redirect '/'
 end
 
 get '/signin' do
-	erb :signinmm
+	erb :signin
 end
 
 post '/signin' do 
